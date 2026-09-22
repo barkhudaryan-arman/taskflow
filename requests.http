@@ -1,0 +1,27 @@
+###
+GET http://localhost:8080/tasks
+
+###
+POST http://localhost:8080/tasks
+Content-Type: application/json
+
+{
+  "title": "Купить кофе",
+  "description": "Зерновой, 1 кг"
+}
+
+###
+GET http://localhost:8080/tasks/1
+
+###
+DELETE http://localhost:8080/tasks/1
+
+### Обновить задачу (меняем статус и текст)
+PUT http://localhost:8080/tasks/2
+Content-Type: application/json
+
+{
+  "title": "Купить кофе",
+  "description": "Зерновой, 1 кг. И еще молоко!",
+  "status": "IN_PROGRESS"
+}

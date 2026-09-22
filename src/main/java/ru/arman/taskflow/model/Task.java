@@ -1,9 +1,21 @@
 package ru.arman.taskflow.model;
 
-public class Task extends BaseEntity{
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+
+@Entity
+public class Task extends BaseEntity {
+
     private String title;
+
     private String description;
+
+    @Enumerated(EnumType.STRING)
     private TaskStatus status = TaskStatus.TODO;
+
+    public Task() {
+    }
 
     @Override
     public String toString() {
