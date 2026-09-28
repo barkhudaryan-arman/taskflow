@@ -1,27 +1,30 @@
-###
-GET http://localhost:8080/tasks
+### Получить все задачи
+GET http://localhost:8081/api/v1/tasks
 
-###
-POST http://localhost:8080/tasks
+### Создать задачу
+POST http://localhost:8081/api/v1/tasks
 Content-Type: application/json
 
 {
-  "title": "Купить кофе",
-  "description": "Зерновой, 1 кг"
+  "title": "Изучить Spring Boot",
+  "description": "Разобраться с контроллерами, сервисами и DTO"
 }
 
-###
-GET http://localhost:8080/tasks/1
+### Получить задачу по ID
+GET http://localhost:8081/api/v1/tasks/1
 
-###
-DELETE http://localhost:8080/tasks/1
-
-### Обновить задачу (меняем статус и текст)
-PUT http://localhost:8080/tasks/2
+### Обновить задачу
+PUT http://localhost:8081/api/v1/tasks/1
 Content-Type: application/json
 
 {
-  "title": "Купить кофе",
-  "description": "Зерновой, 1 кг. И еще молоко!",
+  "title": "Изучить Spring Boot (обновлено)",
+  "description": "Добавить валидацию и обработку ошибок",
   "status": "IN_PROGRESS"
 }
+
+### Удалить задачу
+DELETE http://localhost:8081/api/v1/tasks/1
+
+### Получить несуществующую задачу (проверка 404)
+GET http://localhost:8081/api/v1/tasks/999
