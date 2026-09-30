@@ -1,5 +1,6 @@
 package ru.arman.taskflow.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@Tag(name = "Пользователи", description = "Управление пользователями")
 public class UserController {
 
     private final UserService userService;

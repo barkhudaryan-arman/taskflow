@@ -1,5 +1,6 @@
 package ru.arman.taskflow.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/tasks")
+@Tag(name = "Задачи", description = "Управление задачами")
 public class TaskController {
 
     private final TaskService taskService;
