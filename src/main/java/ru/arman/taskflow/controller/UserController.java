@@ -2,6 +2,7 @@ package ru.arman.taskflow.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.arman.taskflow.dto.UserCreateRequest;
@@ -10,6 +11,7 @@ import ru.arman.taskflow.service.UserService;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/users")
 @Tag(name = "Пользователи", description = "Управление пользователями")
@@ -34,7 +36,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public UserResponse getUserById(@PathVariable Long id){
-        return userService.getuserById(id);
+        return userService.getUserById(id);
     }
 
     @DeleteMapping("/{id}")
