@@ -23,7 +23,10 @@ public final class TaskMapper {
                 task.getTitle(),
                 task.getDescription(),
                 task.getStatus(),
-                task.getCreatedAt()
+                task.getCreatedAt(),
+                task.getAssignee() != null
+                        ? UserMapper.toResponse(task.getAssignee())
+                        : null
         );
     }
 }

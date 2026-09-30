@@ -1,39 +1,57 @@
-### Получить все задачи
-GET http://localhost:8081/api/v1/tasks
+### === USERS ===
 
-### Создать задачу
+### Создать пользователя
+POST http://localhost:8081/api/v1/users
+Content-Type: application/json
+
+{
+  "name": "Arman",
+  "email": "arman@example.com"
+}
+
+### Получить всех пользователей
+GET http://localhost:8081/api/v1/users
+
+### === TASKS ===
+
+### Создать задачу без исполнителя
 POST http://localhost:8081/api/v1/tasks
 Content-Type: application/json
 
 {
-  "title": "Изучить Spring Boot",
-  "description": "Разобраться с контроллерами, сервисами и DTO"
+  "title": "Настроить Liquibase",
+  "description": "Добавить миграции для всех таблиц"
 }
+
+### Создать задачу с исполнителем (подставь реальный ID)
+POST http://localhost:8081/api/v1/tasks
+Content-Type: application/json
+
+{
+  "title": "Написать тесты",
+  "description": "Покрыть сервисный слой unit-тестами",
+  "assigneeId": 1
+}
+
+### Получить все задачи
+GET http://localhost:8081/api/v1/tasks
 
 ### Получить задачу по ID
 GET http://localhost:8081/api/v1/tasks/1
 
-### Обновить задачу
+### Обновить задачу — назначить исполнителя
 PUT http://localhost:8081/api/v1/tasks/1
 Content-Type: application/json
 
 {
-  "title": "Изучить Spring Boot (обновлено)",
-  "description": "Добавить валидацию и обработку ошибок",
-  "status": "IN_PROGRESS"
+  "title": "Настроить Liquibase (обновлено)",
+  "description": "Добавить миграции для всех таблиц",
+  "status": "IN_PROGRESS",
+  "assigneeId": 1
 }
 
 ### Удалить задачу
 DELETE http://localhost:8081/api/v1/tasks/1
 
-### Получить несуществующую задачу (проверка 404)
+### Проверка 404
 GET http://localhost:8081/api/v1/tasks/999
-
-### Создать задачу пустую
-POST http://localhost:8081/api/v1/tasks
-Content-Type: application/json
-
-{
-  "title": "",
-  "description": "test"
-}

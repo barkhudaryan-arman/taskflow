@@ -8,6 +8,7 @@ public record TaskResponse(
         String title,
         String description,
         TaskStatus status,
-        LocalDateTime createdAt
+        LocalDateTime createdAt,
+        UserResponse assignee
 ) {
 }

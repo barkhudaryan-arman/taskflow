@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleuserNotFound(UserNotFoundException ex){
+    public ErrorResponse handleUserNotFound(UserNotFoundException ex){
         return new ErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
                 HttpStatus.NOT_FOUND.getReasonPhrase(),

@@ -12,6 +12,8 @@ public record TaskUpdateRequest(
         @Size(max = 1000, message = "Описание не должно превышать 1000 символов")
         String description,
 
-        TaskStatus status
+        TaskStatus status,
+
+        Long assigneeId
 ) {
 }

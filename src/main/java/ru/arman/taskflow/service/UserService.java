@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public UserResponse createUser(UserCreateRequest request){
-        if (userRepository.existByEmail(request.email())){
+        if (userRepository.existsByEmail(request.email())){
             throw new IllegalArgumentException("Пользователь с email " + request.email() + " уже существует");
         }
         User user = UserMapper.toEntity(request);
