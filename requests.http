@@ -28,3 +28,12 @@ DELETE http://localhost:8081/api/v1/tasks/1
 
 ### Получить несуществующую задачу (проверка 404)
 GET http://localhost:8081/api/v1/tasks/999
+
+### Создать задачу пустую
+POST http://localhost:8081/api/v1/tasks
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "test"
+}
