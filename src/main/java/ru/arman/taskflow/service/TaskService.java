@@ -1,6 +1,8 @@
 package ru.arman.taskflow.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.arman.taskflow.dto.TaskCreateRequest;
 import ru.arman.taskflow.dto.TaskResponse;
@@ -27,14 +29,11 @@ public class TaskService {
         this.userRepository = userRepository;
     }
 
-    public List<TaskResponse> getAllTasks() {
-        log.info("Получение всех задач");
-        List<TaskResponse> tasks = taskRepository.findAll()
-                .stream()
-                .map(TaskMapper::toResponse)
-                .toList();
-        log.info("Найдено {} задач", tasks.size());
-        return tasks;
+    public Page<TaskResponse> getAllTasks(Pageable pageable) {
+        log.info("Получение задач: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
+        Page<Task> taskPage = taskRepository.findAll(pageable);
+        // .map() на Page — преобразует каждый элемент, сохраняя метаданные пагинации
+        return taskPage.map(TaskMapper::toResponse);
     }
 
     public TaskResponse createTask(TaskCreateRequest request) {

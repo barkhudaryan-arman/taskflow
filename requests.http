@@ -55,3 +55,15 @@ DELETE http://localhost:8081/api/v1/tasks/1
 
 ### Проверка 404
 GET http://localhost:8081/api/v1/tasks/999
+
+### Получить задачи — первая страница (10 штук)
+GET http://localhost:8081/api/v1/tasks?page=0&size=10
+
+### Получить задачи — вторая страница
+GET http://localhost:8081/api/v1/tasks?page=1&size=10
+
+### Получить задачи — сортировка по title (по алфавиту)
+GET http://localhost:8081/api/v1/tasks?page=0&size=5&sort=title,asc
+
+### Получить задачи — сортировка по дате (новые первыми)
+GET http://localhost:8081/api/v1/tasks?page=0&size=5&sort=createdAt,desc

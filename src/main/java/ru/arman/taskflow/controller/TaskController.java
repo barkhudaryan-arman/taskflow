@@ -2,6 +2,9 @@ package ru.arman.taskflow.controller;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.arman.taskflow.dto.TaskCreateRequest;
@@ -9,7 +12,6 @@ import ru.arman.taskflow.dto.TaskResponse;
 import ru.arman.taskflow.dto.TaskUpdateRequest;
 import ru.arman.taskflow.service.TaskService;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/tasks")
@@ -24,10 +26,10 @@ public class TaskController {
 
 
     @GetMapping
-    public List<TaskResponse> getAllTasks() {
-        return taskService.getAllTasks();
+    public Page<TaskResponse> getAllTasks(
+            @PageableDefault(size = 10, sort = "createdAt") Pageable pageable) {
+        return taskService.getAllTasks(pageable);
     }
-
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

@@ -1,6 +1,8 @@
 package ru.arman.taskflow.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.arman.taskflow.dto.UserCreateRequest;
 import ru.arman.taskflow.dto.UserResponse;
@@ -9,7 +11,6 @@ import ru.arman.taskflow.mapper.UserMapper;
 import ru.arman.taskflow.model.User;
 import ru.arman.taskflow.repository.UserRepository;
 
-import java.util.List;
 
 @Slf4j
 @Service
@@ -21,12 +22,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<UserResponse> getAllUsers(){
-        log.info("Получение всех пользователей");
-        return userRepository.findAll()
-                .stream()
-                .map(UserMapper::toResponse)
-                .toList();
+    public Page<UserResponse> getAllUsers(Pageable pageable) {
+        log.info("Получение пользователей: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
+        return userRepository.findAll(pageable)
+                .map(UserMapper::toResponse);
     }
 
     public UserResponse createUser(UserCreateRequest request){
