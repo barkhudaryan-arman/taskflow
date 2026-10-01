@@ -6,7 +6,8 @@ Content-Type: application/json
 
 {
   "name": "Arman",
-  "email": "arman@example.com"
+  "email": "arman.secure@example.com",
+  "password": "my_super_secret_password"
 }
 
 ### Получить всех пользователей

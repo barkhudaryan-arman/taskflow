@@ -11,6 +11,10 @@ public record UserCreateRequest(
 
         @NotBlank(message = "Email не может быть пустым")
         @Email(message = "Некорректный формат email")
-        String email
+        String email,
+
+        @NotBlank(message = "Пароль не может быть пустым")
+        @Size(min = 6, message = "пароль должен быть не менее 6 символов")
+        String password
 ) {
 }

@@ -3,6 +3,7 @@ package ru.arman.taskflow.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.arman.taskflow.dto.UserCreateRequest;
 import ru.arman.taskflow.dto.UserResponse;
@@ -18,8 +19,11 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Page<UserResponse> getAllUsers(Pageable pageable) {
@@ -34,6 +38,7 @@ public class UserService {
             throw new IllegalArgumentException("Пользователь с email " + request.email() + " уже существует");
         }
         User user = UserMapper.toEntity(request);
+        user.setPassword(passwordEncoder.encode(request.password()));
         User savedUser = userRepository.save(user);
         return UserMapper.toResponse(savedUser);
     }

@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/changeset/001-create-task-table.yaml
   - include:
       file: db/changelog/changeset/002-create-user-table.yaml
+  - include:
+      file: db/changelog/changeset/003-add-password-to-users.yaml

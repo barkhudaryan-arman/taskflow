@@ -26,6 +26,9 @@ public class User extends BaseEntity{
     @Column(nullable = false, unique = true,length = 255)
     private String email;
 
+    @Column(nullable = false)
+    private String password;
+
     @OneToMany(mappedBy = "assignee")
     private List<Task> tasks = new ArrayList<>();
 }
