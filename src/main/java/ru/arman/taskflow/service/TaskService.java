@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.arman.taskflow.dto.TaskCreateRequest;
 import ru.arman.taskflow.dto.TaskResponse;
 import ru.arman.taskflow.dto.TaskUpdateRequest;
@@ -29,6 +30,7 @@ public class TaskService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public Page<TaskResponse> getAllTasks(Pageable pageable) {
         log.info("Получение задач: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
         Page<Task> taskPage = taskRepository.findAll(pageable);
