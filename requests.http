@@ -81,3 +81,13 @@ GET http://localhost:8081/api/v1/tasks?page=0&size=5&sort=createdAt,desc
 ### Получить задачи (с токеном)
 GET http://localhost:8081/api/v1/tasks
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTEwMjQ3NzksImV4cCI6MTc5MTExMTE3OX0.fOQGgNKN6jJKL27AZdBOb7bO8YkADoM_TtlK3Ndty5iKcmDSxYS5b_qpdshKsPBB7MvRoCLHzd8Lx9lA9CkU_w
+
+### Создание задачи
+POST http://localhost:8081/api/v1/tasks
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTEwMzY0NjYsImV4cCI6MTc5MTEyMjg2Nn0.xUOq9f-iqE2Afax08OT5J1r0FCdhts7PFogrh4B9BsEjd1RdxUCq27okYJr2rWf3BkFAvMkDoiCIg8Fm2JVtpw
+
+{
+  "title": "Проверка асинхронности",
+  "description": "Тестируем, как работает @Async и привязка токена"
+}

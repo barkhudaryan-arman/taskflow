@@ -3,6 +3,7 @@ package ru.arman.taskflow.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.arman.taskflow.dto.TaskCreateRequest;
@@ -16,7 +17,6 @@ import ru.arman.taskflow.model.User;
 import ru.arman.taskflow.repository.TaskRepository;
 import ru.arman.taskflow.repository.UserRepository;
 
-import java.util.List;
 
 @Slf4j
 @Service
@@ -24,30 +24,30 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
-    public TaskService(TaskRepository taskRepository, UserRepository userRepository) {
+    public TaskService(TaskRepository taskRepository, UserRepository userRepository, NotificationService notificationService) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.notificationService = notificationService;
     }
 
     @Transactional
     public Page<TaskResponse> getAllTasks(Pageable pageable) {
         log.info("Получение задач: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
         Page<Task> taskPage = taskRepository.findAll(pageable);
-        // .map() на Page — преобразует каждый элемент, сохраняя метаданные пагинации
         return taskPage.map(TaskMapper::toResponse);
     }
 
     public TaskResponse createTask(TaskCreateRequest request) {
         log.info("Создание задачи: title={}", request.title());
         Task task = TaskMapper.toEntity(request);
-        if (request.assigneeId() != null) {
-            User assignee = findUserOrThrow(request.assigneeId());
-            task.setAssignee(assignee);
-            log.debug("Назначен исполнитель: userId={}", request.assigneeId());
-        }
+        User currentUser = getCurrentUser();
+        task.setAssignee(currentUser);
+        log.debug("Задача привязана к текущему пользователю: {}",currentUser.getEmail());
         Task savedTask = taskRepository.save(task);
         log.info("Задача создана: id={}", savedTask.getId());
+        notificationService.sendTaskCreatedNotification(currentUser.getEmail(),savedTask.getTitle());
         return TaskMapper.toResponse(savedTask);
     }
 
@@ -99,5 +99,11 @@ public class TaskService {
                     log.warn("Пользователь не найден: id={}", userId);
                     return new UserNotFoundException("Пользователь с ID " + userId + " не найден");
                 });
+    }
+
+    private User getCurrentUser(){
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException("Текущий пользователь не найден в БД"));
     }
 }
