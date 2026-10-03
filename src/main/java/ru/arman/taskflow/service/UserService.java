@@ -18,18 +18,19 @@ import ru.arman.taskflow.repository.UserRepository;
 public class UserService {
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     public Page<UserResponse> getAllUsers(Pageable pageable) {
         log.info("Получение пользователей: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
         return userRepository.findAll(pageable)
-                .map(UserMapper::toResponse);
+                .map(userMapper::toResponse);
     }
 
     public UserResponse createUser(UserCreateRequest request){
@@ -37,16 +38,16 @@ public class UserService {
         if (userRepository.existsByEmail(request.email())){
             throw new IllegalArgumentException("Пользователь с email " + request.email() + " уже существует");
         }
-        User user = UserMapper.toEntity(request);
+        User user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(request.password()));
         User savedUser = userRepository.save(user);
-        return UserMapper.toResponse(savedUser);
+        return userMapper.toResponse(savedUser);
     }
 
     public UserResponse getUserById(Long id){
         log.info("Получение пользователя по id={}", id);
         User user = findUserOrThrow(id);
-        return UserMapper.toResponse(user);
+        return userMapper.toResponse(user);
     }
 
     public void deleteUser(Long id){

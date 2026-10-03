@@ -1,28 +1,17 @@
 package ru.arman.taskflow.mapper;
 
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import ru.arman.taskflow.dto.UserCreateRequest;
 import ru.arman.taskflow.dto.UserResponse;
 import ru.arman.taskflow.model.User;
 
-public final class UserMapper {
+@Mapper(componentModel = "spring")
+public interface UserMapper {
 
-    public UserMapper() {
-    }
+    @Mapping(target = "password", ignore = true)
+    User toEntity(UserCreateRequest request);
 
-    public static User toEntity(UserCreateRequest request){
-        User user = new User();
-        user.setName(request.name());
-        user.setEmail(request.email());
-        user.setPassword(request.password());
-        return user;
-    }
+    UserResponse toResponse(User user);
 
-    public static UserResponse toResponse(User user){
-        return new UserResponse(
-                user.getId(),
-                user.getName(),
-                user.getEmail(),
-                user.getCreatedAt()
-        );
-    }
 }

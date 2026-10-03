@@ -25,36 +25,38 @@ public class TaskService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
     private final NotificationService notificationService;
+    private final TaskMapper taskMapper;
 
-    public TaskService(TaskRepository taskRepository, UserRepository userRepository, NotificationService notificationService) {
+    public TaskService(TaskRepository taskRepository, UserRepository userRepository, NotificationService notificationService, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
         this.notificationService = notificationService;
+        this.taskMapper = taskMapper;
     }
 
     @Transactional
     public Page<TaskResponse> getAllTasks(Pageable pageable) {
         log.info("Получение задач: page={}, size={}", pageable.getPageNumber(), pageable.getPageSize());
         Page<Task> taskPage = taskRepository.findAll(pageable);
-        return taskPage.map(TaskMapper::toResponse);
+        return taskPage.map(taskMapper::toResponse);
     }
 
     public TaskResponse createTask(TaskCreateRequest request) {
         log.info("Создание задачи: title={}", request.title());
-        Task task = TaskMapper.toEntity(request);
+        Task task = taskMapper.toEntity(request);
         User currentUser = getCurrentUser();
         task.setAssignee(currentUser);
         log.debug("Задача привязана к текущему пользователю: {}",currentUser.getEmail());
         Task savedTask = taskRepository.save(task);
         log.info("Задача создана: id={}", savedTask.getId());
         notificationService.sendTaskCreatedNotification(currentUser.getEmail(),savedTask.getTitle());
-        return TaskMapper.toResponse(savedTask);
+        return taskMapper.toResponse(savedTask);
     }
 
     public TaskResponse getTaskById(Long id) {
         log.debug("Поиск задачи по id={}", id);
         Task task = findTaskOrThrow(id);
-        return TaskMapper.toResponse(task);
+        return taskMapper.toResponse(task);
     }
 
     public void deleteTask(Long id) {
@@ -82,7 +84,7 @@ public class TaskService {
         }
         Task updatedTask = taskRepository.save(existingTask);
         log.info("Задача обновлена: id={}", updatedTask.getId());
-        return TaskMapper.toResponse(updatedTask);
+        return taskMapper.toResponse(updatedTask);
     }
 
     private Task findTaskOrThrow(Long id) {
