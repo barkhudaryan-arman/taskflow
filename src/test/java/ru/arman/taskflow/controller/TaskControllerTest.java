@@ -12,6 +12,8 @@ import ru.arman.taskflow.dto.TaskCreateRequest;
 import ru.arman.taskflow.dto.TaskResponse;
 import ru.arman.taskflow.exception.TaskNotFoundException;
 import ru.arman.taskflow.model.TaskStatus;
+import ru.arman.taskflow.security.CustomUserDetailsService;
+import ru.arman.taskflow.security.JwtUtil;
 import ru.arman.taskflow.service.TaskService;
 
 import java.time.LocalDateTime;
@@ -32,6 +34,12 @@ class TaskControllerTest {
 
     @MockitoBean
     private TaskService taskService;
+
+    @MockitoBean
+    private JwtUtil jwtUtil;
+
+    @MockitoBean
+    private CustomUserDetailsService customUserDetailsService;
 
     @Test
     @DisplayName("POST /api/v1/tasks — создание задачи, 201")
