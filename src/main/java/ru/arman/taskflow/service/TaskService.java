@@ -59,11 +59,11 @@ public class TaskService {
         log.debug("Задача привязана к текущему пользователю: {}", currentUser.getEmail());
         Task savedTask = taskRepository.save(task);
         log.info("Задача создана: id={}", savedTask.getId());
-        notificationService.sendTaskCreatedNotification(currentUser.getEmail(), savedTask.getTitle());
+        notificationService.sendTaskCreateNotification(currentUser.getEmail(), savedTask.getTitle());
         return taskMapper.toResponse(savedTask);
     }
 
-    @Cacheable(value = "tssks", key = "#id")
+    @Cacheable(value = "tasks", key = "#id")
     public TaskResponse getTaskById(Long id) {
         log.debug("Поиск задачи по id={}", id);
         Task task = findTaskOrThrow(id);

@@ -86,11 +86,11 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZ
 ### Создание задачи
 POST http://localhost:8081/api/v1/tasks
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTEwMzY0NjYsImV4cCI6MTc5MTEyMjg2Nn0.xUOq9f-iqE2Afax08OT5J1r0FCdhts7PFogrh4B9BsEjd1RdxUCq27okYJr2rWf3BkFAvMkDoiCIg8Fm2JVtpw
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTEzOTkwNTcsImV4cCI6MTc5MTQ4NTQ1N30.W8NsBS4DQcqf8xI3X-vyIzsuURJXNhpOR224oLUcGh7agcx4Qje3A_i8M3mjfhR5sZAvATGFFAx5W3XjZzbuAw
 
 {
-  "title": "Проверка асинхронности",
-  "description": "Тестируем, как работает @Async и привязка токена"
+  "title": "Первая задача в Kafka!",
+  "description": "Проверяем отправку уведомлений через Apache Kafka"
 }
 
 ### Все задачи со статусом TODO
@@ -102,3 +102,4 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZ
 ### Поиск по слову
 GET http://localhost:8081/api/v1/tasks?keyword=асинхрон
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTExMjcxMTIsImV4cCI6MTc5MTIxMzUxMn0.aDWD-qYkB1DY4mHWsWRCPV6cGY_WUdZ1b80ZPpH4aLswehAvm7lr91NVGZlA56aIXnYBzocveXu1pt9LodXxzQ
+

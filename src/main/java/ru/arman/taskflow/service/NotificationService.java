@@ -1,6 +1,7 @@
 package ru.arman.taskflow.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -8,14 +9,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class NotificationService {
 
+    private final KafkaTemplate<String, String> kafkaTemplate;
+
+    public NotificationService(KafkaTemplate<String, String> kafkaTemplate) {
+        this.kafkaTemplate = kafkaTemplate;
+    }
+
     @Async
-    public void sendTaskCreatedNotification(String email, String taskTitle) {
-        log.info("Начинаем отправку письма на {} в потоке: {}", email, Thread.currentThread().getName());
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        log.info("Письмо успешно отправлено! Уведомление о задаче: {}", taskTitle);
+    public void sendTaskCreateNotification(String email, String taskTitle){
+        String message = String.format("Новая задача '%s' назначена пользователю '%s'", taskTitle, email);
+
+        kafkaTemplate.send("task-notifications", message);
+
+        log.info("Письмо успешно отправлено в Kafka (топик task-notifications): {}", message);
     }
 }
