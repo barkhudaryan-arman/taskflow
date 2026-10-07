@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.arman.taskflow.dto.TaskCreateRequest;
 import ru.arman.taskflow.dto.TaskResponse;
 import ru.arman.taskflow.dto.TaskUpdateRequest;
+import ru.arman.taskflow.model.TaskStatus;
 import ru.arman.taskflow.service.TaskService;
 
 
@@ -27,8 +28,11 @@ public class TaskController {
 
     @GetMapping
     public Page<TaskResponse> getAllTasks(
+            @RequestParam(required = false)TaskStatus status,
+            @RequestParam(required = false) Long assigneeId,
+            @RequestParam(required = false) String keyword,
             @PageableDefault(size = 10, sort = "createdAt") Pageable pageable) {
-        return taskService.getAllTasks(pageable);
+        return taskService.getAllTasks(status, assigneeId, keyword, pageable);
     }
 
     @PostMapping

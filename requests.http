@@ -91,3 +91,13 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZ
   "title": "Проверка асинхронности",
   "description": "Тестируем, как работает @Async и привязка токена"
 }
+
+### Все задачи со статусом TODO
+GET http://localhost:8081/api/v1/tasks?status=TODO
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTExMjcxMTIsImV4cCI6MTc5MTIxMzUxMn0.aDWD-qYkB1DY4mHWsWRCPV6cGY_WUdZ1b80ZPpH4aLswehAvm7lr91NVGZlA56aIXnYBzocveXu1pt9LodXxzQ
+### Задачи юзера с ID 2
+GET http://localhost:8081/api/v1/tasks?assigneeId=2
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTExMjcxMTIsImV4cCI6MTc5MTIxMzUxMn0.aDWD-qYkB1DY4mHWsWRCPV6cGY_WUdZ1b80ZPpH4aLswehAvm7lr91NVGZlA56aIXnYBzocveXu1pt9LodXxzQ
+### Поиск по слову
+GET http://localhost:8081/api/v1/tasks?keyword=асинхрон
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTExMjcxMTIsImV4cCI6MTc5MTIxMzUxMn0.aDWD-qYkB1DY4mHWsWRCPV6cGY_WUdZ1b80ZPpH4aLswehAvm7lr91NVGZlA56aIXnYBzocveXu1pt9LodXxzQ
