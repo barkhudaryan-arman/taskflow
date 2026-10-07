@@ -1,6 +1,8 @@
 package ru.arman.taskflow.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -61,12 +63,14 @@ public class TaskService {
         return taskMapper.toResponse(savedTask);
     }
 
+    @Cacheable(value = "tssks", key = "#id")
     public TaskResponse getTaskById(Long id) {
         log.debug("Поиск задачи по id={}", id);
         Task task = findTaskOrThrow(id);
         return taskMapper.toResponse(task);
     }
 
+    @CacheEvict(value = "tasks", key = "#id")
     public void deleteTask(Long id) {
         log.info("Удаление задачи: id={}", id);
         if (!taskRepository.existsById(id)) {
@@ -76,6 +80,7 @@ public class TaskService {
         log.info("Задача удалена: id={}", id);
     }
 
+    @CacheEvict(value = "tasks", key = "#id")
     public TaskResponse updateTask(Long id, TaskUpdateRequest request) {
         log.info("Обновление задачи: id={}", id);
         Task existingTask = findTaskOrThrow(id);
