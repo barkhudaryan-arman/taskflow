@@ -1,6 +1,5 @@
 name: TaskFlow CI
 
-# Запускать этот скрипт при каждом push в ветку main (или master)
 on:
   push:
     branches: [ "main", "master" ]
@@ -9,21 +8,33 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest # Поднимаем виртуальную машину на Linux
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: taskflow
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: arman20072001
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-      # 1. Скачиваем твой код из репозитория
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Устанавливаем Java 21 на виртуальную машину
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven # Кэшируем зависимости, чтобы сборка шла быстрее
+          cache: maven
 
-      # 3. Запускаем компиляцию и прогоняем все тесты!
       - name: Build and Test with Maven
         run: mvn -B clean package
