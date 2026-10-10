@@ -48,7 +48,7 @@ GET http://localhost:8081/api/v1/tasks
 
 ### Получить задачу по ID
 GET http://localhost:8081/api/v1/tasks/2
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTE2NDY3NTcsImV4cCI6MTc5MTczMzE1N30.7vsrV_BVKmfhDPqM_-u92tjMTYHaSD72dtfnZ7-pPR4zqBJQyQqMlrTExClgRkFWT3aEOzwsIiCrJ4KdjKSS-g
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhcm1hbi5zZWN1cmVAZXhhbXBsZS5jb20iLCJpYXQiOjE3OTE2NDkwODksImV4cCI6MTc5MTczNTQ4OX0.7TT8FaS42SizYkjTmU2VLSYqBgUMWbfGehMwBvuDsH6v-wHZ-NW50dziEo1IPLGlq2Bl-6x9ZuBdPAgfro1R7A
 
 ### Обновить задачу — назначить исполнителя
 PUT http://localhost:8081/api/v1/tasks/2
